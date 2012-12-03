@@ -72,33 +72,21 @@ h1 {
 /* 4. Auth */
 
 #auth {
-    width: 582px;
-    position: absolute;
-    left: 50%;
-    margin-left: -291px;
-    top: 200px;
     background: #fff;
-    padding: 30px;
-    border: 1px solid #D4D4D4;
-    -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
-    -o-border-radius: 8px;
-    -ms-border-radius: 8px;
-    -khtml-border-radius: 8px;
-    border-radius: 8px;
-    -moz-box-shadow: 0px 1px 8px rgba(0,0,0,0.15);
-    -webkit-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.15);
-    -o-box-shadow: 0px 1px 8px rgba(0,0,0,0.15);
-    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.15);
+    padding: 15px;
     text-align: center;
 }
 
 #auth h1 {
-    text-align: left;
-    float: left;
-    width: 120px;
-    font-size: 16px;
-    line-height: 52px;
+    display: block;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #efefef;
+}
+
+#auth p {
+    padding: 0;
+    margin: 0;
 }
 
 #auth .error,
@@ -108,15 +96,6 @@ h1 {
     font-size: 12px;
     line-height: 12px;
     text-align: left;
-}
-
-#auth p {
-    float: left;
-    margin: 0;
-    width: 380px;
-    border-left: 1px solid #efefef;
-    padding-left: 20px;
-    margin-left: 20px;
 }
 
 #auth .signin {
@@ -169,7 +148,43 @@ h1 {
 
 /* i. Tablet Landscape */
 
-@media all and (max-height: 1024px) {
+@media all and (min-width: 600px) {
+
+    /* 4. Auth */
+
+    #auth {
+        width: 582px;
+        position: absolute;
+        left: 50%;
+        margin-left: -291px;
+        top: 200px;
+        padding: 30px;
+        border: 1px solid #D4D4D4;
+        .rounded(8px);
+        -moz-box-shadow: 0px 1px 8px rgba(0,0,0,0.15);
+        -webkit-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.15);
+        -o-box-shadow: 0px 1px 8px rgba(0,0,0,0.15);
+        box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    #auth h1 {
+        text-align: left;
+        float: left;
+        width: 120px;
+        font-size: 16px;
+        line-height: 52px;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    #auth p {
+        float: left;
+        width: 380px;
+        border-left: 1px solid #efefef;
+        padding-left: 20px;
+        margin-left: 20px;
+    }
 
 }
 
