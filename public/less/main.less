@@ -28,18 +28,16 @@
 
 body {
     font-size: 14px;
-    font-family: 'OpenSansRegular', Verdana, sans-serif;
+    font-family: @font-regular;
     background: @body-bg;
     color: #555;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
 }
 
 h1,
 h2,
 h3,
 h4 {
-    font-family: 'OpenSansSemibold', Verdana, sans-serif;
+    font-family: @font-bold;
     display: block;
     font-weight: normal;
 }
@@ -52,9 +50,15 @@ h1 {
     padding-top: 40px;
 }
 
+#wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
 .content {
     margin: 5px;
-    padding: 5px;
+    padding: 10px;
     background: @content-bg;
     border: 1px solid @content-border;
     .rounded(5px);
@@ -158,62 +162,139 @@ h1 {
 #masthead {
     color: @masthead-text;
     .background-gradient(@masthead-bg-from, @masthead-bg-to);
-    position: fixed;
+    width: 100%;
+    position: absolute;
+    height: 40px;
     top: 0;
     left: 0;
-    width: 100%;
+    height: 40px;
     line-height: 40px;
     padding: 0 15px;
+    z-index: 3;
+    overflow: hidden;
+    .box-shadow(0, 3px, 5px, 0, rgba(0, 0, 0, 0.3));
 }
 
 #masthead h1 {
     float: left;
-    margin-right: 15px;
-    padding-right: 15px;
-    border-right: 1px solid #333;
+}
+
+#masthead p {
+    display: none;
+}
+
+#user-panel {
+    float: right;
+    color: @masthead-text;
+    text-decoration: none;
+}
+
+#user-panel img {
+    height: 40px;
+    margin-left: 10px;
 }
 
 /* 6. Timeline */
 
 #timeline {
-
+    position: relative;
+    background: @content-bg;
+    overflow: scroll;
 }
 
-#timeline-markers {
+#timeline ul {
     list-style: none;
 }
 
-#timeline .day .date {
-    height: @timeline-day-height;
-    margin-top: 10px;
+#timeline-markers {
+    position: fixed;
+    left: 0;
+    top: 80px;
+    width: 100px;
+    height: 100%;
+    background: @body-bg;
+    border-right: 1px solid @content-border;
+    z-index: 2;
 }
 
-#timeline .day:first-child .date {
-    margin: 0;
+#timeline-items {
+    position: fixed;
+    left: 0;
+    top: 40px;
+    width: 100%;
+    padding-left: 100px;
+    height: 40px;
+    background: @content-bg;
+    border-bottom: 1px solid @content-border;
+    overflow: hidden;
+    z-index: 2;
 }
 
-#timeline .day .date {
-    padding-right: 10px;
-    margin-right: 10px;
-    border-right: 1px solid #efefef;
-    width: 20%;
-    display: block;
-    .text-truncate();
-    text-align: right;
+#timeline-inner {
+    margin-left: 100px;
+    margin-top: 40px;
+    width: 1900px;
+    height: 1220px;
+    background: url(http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/noisy_grid_@2X.png);
+    background-size: 150px;
+    z-index: 1;
     position: relative;
 }
 
-#timeline .day .date:after {
-    position: absolute;
-    content: ' ';
-    text-indent: -999;
+#timeline-markers li {
+    height: 100px;
+    border-bottom: 1px solid @content-border;
+    padding: 10px;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: right;
+}
+
+#timeline-items li {
+    float: left;
+    width: 100px;
+    height: 40px;
+    padding: 10px;
+    font-size: 12px;
+    line-height: 18px;
+    .text-truncate();
+    border-right: 1px solid @content-border;
+}
+
+#timeline-markers ul,
+#timeline-items ul {
+    position: relative;
+}
+
+#timeline-inner .item {
+    width: 100px;
+    height: 100%;
     overflow: hidden;
-    width: 6px;
-    height: 6px;
-    .rounded(6px);
-    background: #efefef;
-    top: 5px;
-    right: -3px;
+    position: relative;
+    float: left;
+}
+
+#timeline-inner .item h3 {
+    display: none;
+}
+
+#timeline-inner .item .bookings li {
+    .text-truncate();
+    font-size: 11px;
+    line-height: 16px;
+    padding: 10px;
+    .background-gradient(@booking-bg-from, @booking-bg-to);
+    position: absolute;
+    left: 0;
+    width: 100%;
+    color: @booking-text;
+    .box-shadow(inset 1px, 1px, 0, 0, rgba(255, 255, 255, 0.2));
+}
+
+#timeline-inner .item .bookings li strong {
+    display: block;
+    font-size: 12px;
+    font-family: @font-bold;
 }
 
 @media all and (-webkit-min-device-pixel-ratio: 1.2) {
@@ -279,6 +360,18 @@ h1 {
         border-left: 1px solid #efefef;
         padding-left: 20px;
         margin-left: 20px;
+    }
+
+    /* 5. Masthead */
+
+    #masthead h1 {
+        margin-right: 15px;
+        padding-right: 15px;
+        border-right: 1px solid #333;
+    }
+
+    #masthead p {
+        display: block;
     }
 
 }

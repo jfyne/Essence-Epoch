@@ -31,7 +31,10 @@ Ess.Epoch = Backbone.View.extend({
         // Initialise Web Socket
         this.socket = new Ess.Socket();
 
-        console.log('Epoch initialised');
+        // Initialise Timeline
+        this.timeline = new Ess.TimelineView();
+
+        console.log('Epoch initialised, time since Epoch ' + new Date().getTime());
 
     },
 

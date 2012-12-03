@@ -3,49 +3,86 @@
 @default("Epoch") {
             <div id="epoch">
                 <header id="masthead">
+                    <a id="user-panel" href="#">
+                        @user.name.map { name =>
+                            @name
+                        }
+                        @user.picture.map { picture =>
+                            <img src="@picture">
+                        }
+                    </a>
                     <h1>Epoch</h1>
                     <p>Resource Management</p>
-                    @user.name.map { name =>
-                        <p>@name</p>
-                    }
-                    @user.picture.map { picture =>
-                        <img src="@picture">
-                    }
                 </header>
-                <div class="content">
-                    <div id="timeline">
-                        <div class="day">
-                            <h3 class="date">3rd December</h3>
+                <div id="timeline">
+                    <div id="timeline-markers">
+                        <ul>
+                            <li>3rd December</li>
+                            <li>4th December</li>
+                            <li>5th December</li>
+                            <li>6th December</li>
+                            <li>7th December</li>
+                            <li>8th December</li>
+                            <li>9th December</li>
+                            <li>10th December</li>
+                            <li>11th December</li>
+                            <li>12th December</li>
+                            <li>13th December</li>
+                        </ul>
+                    </div>
+                    <div id="timeline-items">
+                        <ul>
+                            <li>Paul Cooper</li>
+                            <li>Josh Fyne</li>
+                            <li>Jency Chong</li>
+                            <li>Clare Isaacs</li>
+                            <li>Neal Davies</li>
+                            <li>Alastair Stone</li>
+                            <li>Liam Keaton</li>
+                            <li>Andrew Devlin</li>
+                            <li>Glenn Famy</li>
+                        </li>
+                    </div>
+                    <div id="timeline-inner">
+                        <div class="item">
+                            <h3>Paul Cooper</h3>
+                            <ul class="bookings">
+                                <li style="height: 50px; top: 0;"><strong>Google</strong> Google Chrome</li>
+                                <li style="height: 50px; top: 50px;"><strong>Essence</strong> Olive Media View</li>
+                                <li style="height: 100px; top: 100px;"><strong>Google</strong> Google Chrome</li>
+                                <li style="height: 400px; top: 400px;"><strong>Essence</strong> Olive Media View</li>
+                            </ul>
                         </div>
-                        <div class="day">
-                            <h3 class="date">4th December</h3>
+                        <div class="item">
+                            <h3>Josh Fyne</h3>
+                            <ul class="bookings">
+                                <li style="height: 700px; top: 0;"><strong>Expedia</strong> Banner Creation</li>
+                            </ul>
                         </div>
-                        <div class="day">
-                            <h3 class="date">5th December</h3>
+                        <div class="item">
+                            <h3>Jency Chong</h3>
+                            <ul class="bookings">
+                                <li style="height: 12.5px; top: 12.5px;"><strong>Barclays</strong> Brand Development</li>
+                                <li style="height: 200px; top: 100px;"><strong>Expedia</strong> Banner Creation</li>
+                            </ul>
                         </div>
-                        <div class="day">
-                            <h3 class="date">6th December</h3>
+                        <div class="item">
+                            <h3>Josh Fyne</h3>
+                            <ul class="bookings">
+                                <li style="height: 700px; top: 0;"><strong>Expedia</strong> Banner Creation</li>
+                            </ul>
                         </div>
-                        <div class="day">
-                            <h3 class="date">7th December</h3>
+                        <div class="item">
+                            <h3>Josh Fyne</h3>
+                            <ul class="bookings">
+                                <li style="height: 700px; top: 0;"><strong>Expedia</strong> Banner Creation</li>
+                            </ul>
                         </div>
-                        <div class="day">
-                            <h3 class="date">8th December</h3>
-                        </div>
-                        <div class="day">
-                            <h3 class="date">9th December</h3>
-                        </div>
-                        <div class="day">
-                            <h3 class="date">10th December</h3>
-                        </div>
-                        <div class="day">
-                            <h3 class="date">11th December</h3>
-                        </div>
-                        <div class="day">
-                            <h3 class="date">12th December</h3>
-                        </div>
-                        <div class="day">
-                            <h3 class="date">13th December</h3>
+                        <div class="item">
+                            <h3>Josh Fyne</h3>
+                            <ul class="bookings">
+                                <li style="height: 700px; top: 0;"><strong>Expedia</strong> Banner Creation</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
