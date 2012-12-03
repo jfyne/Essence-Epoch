@@ -69,7 +69,8 @@ object Application extends Controller {
                     val refreshToken = (response.json \ "refresh_token").asOpt[String]
                     val user = User.createUserFromGoogle(token, refreshToken)
                     Redirect(routes.Timeline.index).withSession(
-                        "email" -> user.email.get
+                        "email" -> user.email.get,
+                        "token" -> token
                     )
                 }.getOrElse {
                     Redirect(routes.Application.login).withNewSession.flashing(
