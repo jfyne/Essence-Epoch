@@ -1,17 +1,18 @@
 /**
- * A OMV user
+ * A user
  *
  * @author Josh Fyne
  */
 package models
 
+import play.api._
 import play.api.db._
-import play.api.Play.current
+import play.api.Play.{configuration,current}
 import play.api.libs.ws._
 import play.api.libs.concurrent._
-import play.api.data._
-import play.api.data.Forms._
-import play.api.data.validation.Constraints._
+import play.api.libs.json._
+
+import com.codahale.jerkson.Json._
 
 import anorm._
 import anorm.SqlParser._
@@ -78,6 +79,40 @@ object User {
     }
 
     /**
+     * Refresh the access token
+     *
+     * @param User user
+     * @return String token
+     */
+    def refreshToken(user:User) = {
+        val response = WS.url("https://accounts.google.com/o/oauth2/token").post(Map(
+            "client_id" -> Seq(Play.configuration.getString("google.clientId").get),
+            "client_secret" -> Seq(Play.configuration.getString("google.clientSecret").get),
+            "refresh_token" -> Seq(user.refresh.get),
+            "grant_type" -> Seq("refresh_token")
+        ))
+        val json = response.value.get.json
+
+        (json \ "access_token").asOpt[String].map { token =>
+            DB.withConnection { implicit connection =>
+                SQL("""
+                    update epoch_users
+                    set
+                    user_token={token}
+                    where
+                    user_email={email}
+                    """
+                ).on(
+                    'token -> token,
+                    'email -> user.email.get
+                ).executeUpdate
+            }
+        }.getOrElse {
+            throw new Exception("Token refresh failed")
+        }
+    }
+
+    /**
      * Create a new user from google
      *
      */
@@ -90,6 +125,9 @@ object User {
         var user = fetchByEmail(email)
 
         if (user.isEmpty && !refreshToken.isEmpty) {
+            // Create the applications calendar
+            val calendarId = Calendar.createEpoch(token)
+
             DB.withConnection { implicit connection =>
                 SQL("""
                     insert into epoch_users (
@@ -100,7 +138,8 @@ object User {
                         user_family,
                         user_picture,
                         user_token,
-                        user_refresh
+                        user_refresh,
+                        user_calendar
                     ) values (
                         {id},
                         {email},
@@ -109,7 +148,8 @@ object User {
                         {family},
                         {picture},
                         {token},
-                        {refresh}
+                        {refresh},
+                        {calendarId}
                     )
                 """).on(
                     'id -> (json \ "id").as[String],
@@ -119,9 +159,11 @@ object User {
                     'family -> (json \ "family_name").as[String],
                     'picture -> (json \ "picture").as[String],
                     'token -> token,
-                    'refresh -> refreshToken.get
+                    'refresh -> refreshToken.get,
+                    'calendarId -> calendarId
                 ).executeUpdate
             }
+
         } else if (!user.isEmpty && !refreshToken.isEmpty) {
             DB.withConnection { implicit connection =>
                 SQL("""

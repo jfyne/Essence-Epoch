@@ -13,3 +13,5 @@ GET     /login                      controllers.Application.login
 GET     /login/authenticate         controllers.Application.authenticate
 GET     /logout                     controllers.Application.logout
 
+# Api
+GET     /socket                     controllers.Socket.index
