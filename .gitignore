@@ -1,3 +1,6 @@
+._*
+.DS_Store
+*.css
 logs
 project/project
 project/target
