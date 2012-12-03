@@ -7,7 +7,8 @@
 
     1. Less Imports
     2. Base
-    3. Layout
+    3. Buttons
+    4. Auth
 
     i.      Tablet Landscape
     ii.     Large Desktop
@@ -34,9 +35,24 @@ body {
     -webkit-transform: translateZ(0);
 }
 
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'OpenSansSemibold', Verdana, sans-serif;
+    display: block;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 22px;
+}
+
+/* 3. Buttons */
+
 .button {
     display: inline-block;
-    background: @button-bg;
+    .background-gradient(@button-bg-from, @button-bg-to);
     color: @button-text;
     font-size: 11px;
     padding: 8px 10px;
@@ -48,12 +64,82 @@ body {
 }
 
 .button:hover {
-    background: darken(@button-bg, 1.5%);
+    .background-gradient(darken(@button-bg-from, 1.5%), darken(@button-bg-to, 1.5%));
     border: 1px solid darken(@button-border, 20%);
     .box-shadow(0, 1px, 2px, 0, rgba(0, 0, 0, 0.15));
 }
 
-/* 3. Layout */
+/* 4. Auth */
+
+#auth {
+    background: #fff;
+    padding: 15px;
+    text-align: center;
+}
+
+#auth h1 {
+    display: block;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #efefef;
+}
+
+#auth p {
+    padding: 0;
+    margin: 0;
+}
+
+#auth .error,
+#auth .errors {
+    margin-bottom: 10px;
+    color: #e32c3b;
+    font-size: 12px;
+    line-height: 12px;
+    text-align: left;
+}
+
+#auth .signin {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+}
+
+#auth .signin .colours {
+    display: block;
+    height: 7px;
+    background: -moz-linear-gradient(left,  #e32c3b 0%, #e32c3b 25%, #0e8ce3 25%, #0e8ce3 50%, #36c520 50%, #36c520 75%, #ffca27 75%, #ffca27 100%);
+    background: -webkit-linear-gradient(left,  #e32c3b 0%, #e32c3b 25%, #0e8ce3 25%, #0e8ce3 50%, #36c520 50%, #36c520 75%, #ffca27 75%, #ffca27 100%);
+    background: -o-linear-gradient(left,  #e32c3b 0%, #e32c3b 25%, #0e8ce3 25%, #0e8ce3 50%, #36c520 50%, #36c520 75%, #ffca27 75%, #ffca27 100%);
+    background: -ms-linear-gradient(left,  #e32c3b 0%, #e32c3b 25%, #0e8ce3 25%, #0e8ce3 50%, #36c520 50%, #36c520 75%, #ffca27 75%, #ffca27 100%);
+    background: linear-gradient(left,  #e32c3b 0%, #e32c3b 25%, #0e8ce3 25%, #0e8ce3 50%, #36c520 50%, #36c520 75%, #ffca27 75%, #ffca27 100%);
+    .border-radius(3px, 3px, 0, 0);
+}
+
+#auth .signin .button {
+    display: block;
+    font-family: 'OpenSansSemibold', sans-serif;
+    .background-gradient(#4581e4, #4174c6);
+    color: #fff;
+    font-size: 14px;
+    padding: 15px 15px;
+    font-weight: bold;
+    border: 1px solid #3a6ab2;
+    .box-shadow(inset 0, 1px, 0, 0, rgba(255, 255, 255, 0.2));
+    .border-radius(0, 0, 3px, 3px);
+}
+
+#auth .signin:hover .button {
+    display: block;
+    background: #4078d1;
+    background: -moz-linear-gradient(top,  #4078d1 0%, #3a6ab2 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4078d1), color-stop(100%,#3a6ab2));
+    background: -webkit-linear-gradient(top,  #4078d1 0%,#3a6ab2 100%);
+    background: -o-linear-gradient(top,  #4078d1 0%,#3a6ab2 100%);
+    background: -ms-linear-gradient(top,  #4078d1 0%,#3a6ab2 100%);
+    background: linear-gradient(top,  #4078d1 0%,#3a6ab2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4078d1', endColorstr='#3a6ab2',GradientType=0 );
+    color: #fff;
+}
 
 @media all and (-webkit-min-device-pixel-ratio: 1.2) {
 }
@@ -62,7 +148,43 @@ body {
 
 /* i. Tablet Landscape */
 
-@media all and (max-height: 1024px) {
+@media all and (min-width: 600px) {
+
+    /* 4. Auth */
+
+    #auth {
+        width: 582px;
+        position: absolute;
+        left: 50%;
+        margin-left: -291px;
+        top: 200px;
+        padding: 30px;
+        border: 1px solid #D4D4D4;
+        .rounded(8px);
+        -moz-box-shadow: 0px 1px 8px rgba(0,0,0,0.15);
+        -webkit-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.15);
+        -o-box-shadow: 0px 1px 8px rgba(0,0,0,0.15);
+        box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    #auth h1 {
+        text-align: left;
+        float: left;
+        width: 120px;
+        font-size: 16px;
+        line-height: 52px;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    #auth p {
+        float: left;
+        width: 380px;
+        border-left: 1px solid #efefef;
+        padding-left: 20px;
+        margin-left: 20px;
+    }
 
 }
 
