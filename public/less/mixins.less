@@ -1,0 +1,57 @@
+/*
+    Document   : mixins.less
+    Created on : 28-Nov-2012
+    Author     : Paul Cooper
+    Project    : Essence Epoch
+    Description: Less Mixins
+*/
+
+.border-radius (@radius) {
+    border-radius: @radius;
+    -moz-border-radius: @radius;
+    -webkit-border-radius: @radius;
+    background-clip: padding-box;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+}
+
+.background-gradient (@from, @to) {
+    background-color: @from;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(@from), to(@to));
+    background-image: -webkit-linear-gradient(top, @from, @to);
+    background-image: -moz-linear-gradient(top, @from, @to);
+    background-image: -o-linear-gradient(top, @from, @to);
+    background-image: linear-gradient(to bottom, @from, @to);
+}
+
+.box-shadow (@hor-offset, @ver-offset, @blur-radius, @spread-radius, @color) {
+    box-shadow: @hor-offset @ver-offset @blur-radius @spread-radius @color;
+    -webkit-box-shadow: @hor-offset @ver-offset @blur-radius @spread-radius @color;
+}
+
+.box-transition (@duration, @ease) {
+    transition: all @duration @ease;
+    -webkit-transition: all @duration @ease;
+    -moz-transition: all @duration @ease;
+    -o-transition: all @duration @ease;
+}
+
+.translate (@x, @y, @z) {
+    -webkit-transform: translate3d(@x, @y, @z);
+    -moz-transform: translate3d(@x, @y, @z);
+    -ms-transform: translate3d(@x, @y, @z);
+    -o-transform: translate3d(@x, @y, @z);
+    transform: translate3d(@x, @y, @z);
+}
+
+.background-size (@size) {
+    -webkit-background-size: @size;
+    background-size: @size;
+}
+
+.text-truncate () {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis;
+}
