@@ -20,7 +20,7 @@ import java.security.MessageDigest
 
 sealed class EpochUser
 case class User(
-    id:Pk[Long],
+    id:Pk[String],
     email:String,
     name:Option[String],
     given:Option[String],
@@ -35,7 +35,7 @@ object User {
     // -- Parsers
 
     val simple = {
-        get[Pk[Long]]("epoch_users.user_id") ~
+        get[Pk[String]]("epoch_users.user_id") ~
         get[String]("epoch_users.user_email") ~
         get[Option[String]]("epoch_users.user_name") ~
         get[Option[String]]("epoch_users.user_given") ~
@@ -79,46 +79,45 @@ object User {
      * Create a new user from google
      *
      */
-    def createUserFromGoogle(token:String):User = {
-        val data: Promise[Response] = WS.url("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token).get()
+    def createUserFromGoogle(token:String, refreshToken:String):User = {
+        val data = WS.url("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token).get()
 
         val json = data.value.get.json
-        var user = fetchByEmail((json \ "email").as[String])
+        println(json)
+        val email = (json \ "email").as[String]
+
+        var user = fetchByEmail(email)
+
+        println("here")
 
         if (user.isEmpty) {
             DB.withConnection { implicit connection =>
                 SQL("""
                     insert into epoch_users (
-                        user_google_id,
+                        user_id,
                         user_email,
                         user_name,
-                        user_given_name,
-                        user_family_name,
-                        user_link,
+                        user_given,
+                        user_family,
                         user_picture,
-                        user_gender,
-                        user_locale
+                        user_token
                     ) values (
-                        {googleId},
+                        {id},
                         {email},
                         {name},
-                        {givenName},
-                        {familyName},
-                        {link},
+                        {given},
+                        {family},
                         {picture},
-                        {gender},
-                        {locale}
+                        {token}
                     )
                 """).on(
-                    'googleId -> (json \ "id").as[String],
+                    'id -> (json \ "id").as[String],
                     'email -> (json \ "email").as[String],
                     'name -> (json \ "name").as[String],
-                    'givenName -> (json \ "given_name").as[String],
-                    'familyName -> (json \ "family_name").as[String],
-                    'link -> (json \ "link").as[String],
+                    'given -> (json \ "given_name").as[String],
+                    'family -> (json \ "family_name").as[String],
                     'picture -> (json \ "picture").as[String],
-                    'gender -> (json \ "gender").as[String],
-                    'locale -> (json \ "locale").as[String]
+                    'token -> refreshToken
                 ).executeUpdate
             }
         } else {
@@ -126,26 +125,22 @@ object User {
                 SQL("""
                     update epoch_users
                     set
-                    user_google_id={googleId},
+                    user_id={id},
                     user_name={name},
-                    user_given_name={givenName},
-                    user_family_name={familyName},
-                    user_link={link},
+                    user_given={given},
+                    user_family={family},
                     user_picture={picture},
-                    user_gender={gender},
-                    user_locale={locale}
+                    user_token={token}
                     where
                     user_email={email}
                 """).on(
-                    'googleId -> (json \ "id").as[String],
+                    'id -> (json \ "id").as[String],
                     'email -> (json \ "email").as[String],
                     'name -> (json \ "name").as[String],
-                    'givenName -> (json \ "given_name").as[String],
-                    'familyName -> (json \ "family_name").as[String],
-                    'link -> (json \ "link").as[String],
+                    'given -> (json \ "given_name").as[String],
+                    'family -> (json \ "family_name").as[String],
                     'picture -> (json \ "picture").as[String],
-                    'gender -> (json \ "gender").as[String],
-                    'locale -> (json \ "locale").as[String]
+                    'token -> refreshToken
                 ).executeUpdate
             }
         }
