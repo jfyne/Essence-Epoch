@@ -1,0 +1,19 @@
+CACHE MANIFEST
+# 2012-11-28
+
+# Explicitly Cache
+CACHE:
+/assets/js/lib/amplify.min.js
+/assets/js/lib/backbone.min.js
+/assets/js/lib/jquery.min.js
+/assets/js/lib/less.min.js
+/assets/js/lib/raphael.min.js
+/assets/js/lib/underscore.min.js
+
+# Require Network Access
+NETWORK:
+*
+
+# static.html will be served if main.py is inaccessible
+FALLBACK:
+#/main.py /static.html
