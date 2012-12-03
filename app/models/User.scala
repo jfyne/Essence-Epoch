@@ -27,6 +27,7 @@ case class User(
     family:Option[String],
     picture:Option[String],
     token:Option[String],
+    refresh:Option[String],
     role:String
 ) extends EpochUser
 
@@ -42,9 +43,10 @@ object User {
         get[Option[String]]("epoch_users.user_family") ~
         get[Option[String]]("epoch_users.user_picture") ~
         get[Option[String]]("epoch_users.user_token") ~
+        get[Option[String]]("epoch_users.user_refresh") ~
         get[String]("epoch_users.user_role") map {
-            case id~email~name~given~family~picture~token~role => User(
-                id, email, name, given, family, picture, token, role
+            case id~email~name~given~family~picture~token~refresh~role => User(
+                id, email, name, given, family, picture, token, refresh, role
             )
         }
     }
@@ -97,7 +99,8 @@ object User {
                         user_given,
                         user_family,
                         user_picture,
-                        user_token
+                        user_token,
+                        user_refresh
                     ) values (
                         {id},
                         {email},
@@ -105,7 +108,8 @@ object User {
                         {given},
                         {family},
                         {picture},
-                        {token}
+                        {token},
+                        {refresh}
                     )
                 """).on(
                     'id -> (json \ "id").as[String],
@@ -114,7 +118,8 @@ object User {
                     'given -> (json \ "given_name").as[String],
                     'family -> (json \ "family_name").as[String],
                     'picture -> (json \ "picture").as[String],
-                    'token -> refreshToken
+                    'token -> token,
+                    'refresh -> refreshToken.get
                 ).executeUpdate
             }
         } else if (!user.isEmpty && !refreshToken.isEmpty) {
@@ -127,7 +132,8 @@ object User {
                     user_given={given},
                     user_family={family},
                     user_picture={picture},
-                    user_token={token}
+                    user_token={token},
+                    user_refresh={refresh}
                     where
                     user_email={email}
                 """).on(
@@ -137,7 +143,8 @@ object User {
                     'given -> (json \ "given_name").as[String],
                     'family -> (json \ "family_name").as[String],
                     'picture -> (json \ "picture").as[String],
-                    'token -> refreshToken
+                    'token -> token,
+                    'refresh -> refreshToken
                 ).executeUpdate
             }
         }

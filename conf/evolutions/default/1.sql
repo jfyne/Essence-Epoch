@@ -10,6 +10,7 @@ CREATE TABLE `epoch_users` (
     `user_family` VARCHAR(100) NULL,
     `user_picture` VARCHAR(200) NULL,
     `user_token` VARCHAR(255) NULL DEFAULT NULL,
+    `user_refresh` VARCHAR(255) NULL DEFAULT NULL,
     PRIMARY KEY (`user_id`, `user_email`)
 )
 COLLATE='utf8_unicode_ci'
