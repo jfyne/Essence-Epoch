@@ -84,7 +84,7 @@ object User {
      * @param User user
      * @return String token
      */
-    def refreshToken(user:User) = {
+    def refreshToken(user:User):String = {
         val response = WS.url("https://accounts.google.com/o/oauth2/token").post(Map(
             "client_id" -> Seq(Play.configuration.getString("google.clientId").get),
             "client_secret" -> Seq(Play.configuration.getString("google.clientSecret").get),
@@ -107,6 +107,7 @@ object User {
                     'email -> user.email.get
                 ).executeUpdate
             }
+            token
         }.getOrElse {
             throw new Exception("Token refresh failed")
         }

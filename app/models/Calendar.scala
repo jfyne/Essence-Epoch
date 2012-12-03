@@ -5,6 +5,9 @@
  */
 package models
 
+import java.util.{Date}
+import java.text.{DateFormat,SimpleDateFormat}
+
 import play.api._
 import play.api.libs.ws._
 import play.api.libs.concurrent._
@@ -19,7 +22,7 @@ object Calendar {
     /**
      * Create the epoch calendar
      *
-     * @param User user
+     * @param String token
      * @return String calendarId
      */
     def createEpoch(token:String):String = {
@@ -38,4 +41,30 @@ object Calendar {
         }.getOrElse(throw new Exception("Calendar creation failed"))
     }
 
+    /**
+     * Fetch a users primary events
+     *
+     * @param String token
+     * @return
+     */
+    def fetchPrimary(token:String):JsValue = {
+        val dateFormat = new SimpleDateFormat("yyyy-MM-dd")
+        val request = WS.url("https://www.googleapis.com/calendar/v3/calendars/primary/events").withHeaders(
+            ("Authorization", ("OAuth " + token))
+        ).withQueryString(
+            ("timeMin", (dateFormat.format(new Date) + "T00:00:00Z"))
+        )
+        println(request.toString)
+
+        val response = request.get()
+        val json = response.value.get.json
+
+        println(json)
+
+        (json \ "error").asOpt[String].map { error =>
+            throw new Exception(error)
+        }
+
+        (json \ "items")
+    }
 }

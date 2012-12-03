@@ -31,10 +31,12 @@ class Worker extends Actor {
      *
      */
     def receive = {
-        case Dispatch(id, group, request, params) => {
+        case Dispatch(id, user, request, params) => {
             try {
+                val token = User.refreshToken(user.get)
                 var (result, send) = request.asInstanceOf[String] match {
                     case "users"        => (User.fetchAll, true)
+                    case "primary"      => (Calendar.fetchPrimary(token), true)
                     case _              => (Map("error" -> "Unknown request"), true)
                 }
 
