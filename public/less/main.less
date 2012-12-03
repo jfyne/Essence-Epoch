@@ -10,6 +10,7 @@
     3. Buttons
     4. Auth
     5. Masthead
+    6. Timeline
 
     i.      Tablet Landscape
     ii.     Large Desktop
@@ -30,8 +31,6 @@ body {
     font-family: 'OpenSansRegular', Verdana, sans-serif;
     background: @body-bg;
     color: #555;
-    width: 100%;
-    height: 100%;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
 }
@@ -49,9 +48,13 @@ h1 {
     font-size: 22px;
 }
 
+#epoch {
+    padding-top: 40px;
+}
+
 .content {
-    margin: 15px;
-    padding: 15px;
+    margin: 5px;
+    padding: 5px;
     background: @content-bg;
     border: 1px solid @content-border;
     .rounded(5px);
@@ -170,14 +173,77 @@ h1 {
     border-right: 1px solid #333;
 }
 
+/* 6. Timeline */
+
+#timeline {
+
+}
+
+#timeline-markers {
+    list-style: none;
+}
+
+#timeline .day .date {
+    height: @timeline-day-height;
+    margin-top: 10px;
+}
+
+#timeline .day:first-child .date {
+    margin: 0;
+}
+
+#timeline .day .date {
+    padding-right: 10px;
+    margin-right: 10px;
+    border-right: 1px solid #efefef;
+    width: 20%;
+    display: block;
+    .text-truncate();
+    text-align: right;
+    position: relative;
+}
+
+#timeline .day .date:after {
+    position: absolute;
+    content: ' ';
+    text-indent: -999;
+    overflow: hidden;
+    width: 6px;
+    height: 6px;
+    .rounded(6px);
+    background: #efefef;
+    top: 5px;
+    right: -3px;
+}
+
 @media all and (-webkit-min-device-pixel-ratio: 1.2) {
 }
 
 /* Media Queries */
 
-/* i. Tablet Landscape */
+/* i. Mobile Landscape */
+
+@media all and (min-width: 400px) {
+
+    /* 2. Base */
+
+    .content {
+        margin: 10px;
+        padding: 10px;
+    }
+
+}
+
+/* ii. Tablet Portrait */
 
 @media all and (min-width: 600px) {
+
+    /* 2. Base */
+
+    .content {
+        margin: 15px;
+        padding: 15px;
+    }
 
     /* 4. Auth */
 
@@ -217,7 +283,7 @@ h1 {
 
 }
 
-/* ii. Large Desktop */
+/* iii. Large Desktop */
 
 @media all and (min-width: 1200px) {
 }
