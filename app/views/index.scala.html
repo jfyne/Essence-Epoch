@@ -1,7 +1,15 @@
+@(user:User)
+
 @default("Epoch") {
             <header id="masthead">
                 <h1>Epoch</h1>
                 <p>Resource Management</p>
+                @user.name.map { name =>
+                    <p>@name</p>
+                }
+                @user.picture.map { picture =>
+                    <img src="@picture">
+                }
             </header>
             <div id="epoch">
                 <div class="content">
