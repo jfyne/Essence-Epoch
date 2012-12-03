@@ -65,12 +65,11 @@ object Application extends Controller {
                 "redirect_uri" -> Seq("http://" + request.host + routes.Application.authenticate),
                 "grant_type" -> Seq("authorization_code")
             )).map { response =>
-                println(response.json)
-                (response.json \ "refresh_token").asOpt[String].map { refreshToken =>
-                    val token = (response.json \ "access_token").asOpt[String].get
+                (response.json \ "access_token").asOpt[String].map { token =>
+                    val refreshToken = (response.json \ "refresh_token").asOpt[String]
                     val user = User.createUserFromGoogle(token, refreshToken)
                     Redirect(routes.Timeline.index).withSession(
-                        "email" -> user.email
+                        "email" -> user.email.get
                     )
                 }.getOrElse {
                     Redirect(routes.Application.login).withNewSession.flashing(
@@ -121,7 +120,7 @@ trait Secured {
      * Redirect if no auth
      *
      */
-    private def onUnauthorized(request:RequestHeader) = Results.Redirect(routes.Application.login)
+    private def onUnauthorized(request:RequestHeader) = Results.Redirect(routes.Application.login).flashing("error" -> "Hell naaww")
 
     /**
      * Redirect if no admin
@@ -142,7 +141,8 @@ trait Secured {
      *
      */
     def withUser(f: => User => Request[AnyContent] => Result) = withAuth { username => implicit request =>
-        User.fetchByEmail(username).map { user =>
+        val user = User.fetchByEmail(username)
+        user.map { user =>
             f(user)(request)
         }.getOrElse(onUnauthorized(request))
     }

@@ -21,7 +21,7 @@ import java.security.MessageDigest
 sealed class EpochUser
 case class User(
     id:Pk[String],
-    email:String,
+    email:Pk[String],
     name:Option[String],
     given:Option[String],
     family:Option[String],
@@ -36,7 +36,7 @@ object User {
 
     val simple = {
         get[Pk[String]]("epoch_users.user_id") ~
-        get[String]("epoch_users.user_email") ~
+        get[Pk[String]]("epoch_users.user_email") ~
         get[Option[String]]("epoch_users.user_name") ~
         get[Option[String]]("epoch_users.user_given") ~
         get[Option[String]]("epoch_users.user_family") ~
@@ -79,18 +79,15 @@ object User {
      * Create a new user from google
      *
      */
-    def createUserFromGoogle(token:String, refreshToken:String):User = {
+    def createUserFromGoogle(token:String, refreshToken:Option[String]):User = {
         val data = WS.url("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token).get()
 
         val json = data.value.get.json
-        println(json)
         val email = (json \ "email").as[String]
 
         var user = fetchByEmail(email)
 
-        println("here")
-
-        if (user.isEmpty) {
+        if (user.isEmpty && !refreshToken.isEmpty) {
             DB.withConnection { implicit connection =>
                 SQL("""
                     insert into epoch_users (
@@ -120,7 +117,7 @@ object User {
                     'token -> refreshToken
                 ).executeUpdate
             }
-        } else {
+        } else if (!user.isEmpty && !refreshToken.isEmpty) {
             DB.withConnection { implicit connection =>
                 SQL("""
                     update epoch_users
