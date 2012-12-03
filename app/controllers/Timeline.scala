@@ -13,9 +13,14 @@ import play.api.libs.json._
 
 import models._
 
-object Timeline extends Controller with Secured {
+object Timeline extends Controller {
 
-    def index = withUser { user => _ =>
-        Ok(views.html.index(user))
+    // def index = withUser { user => _ =>
+    //     Ok(views.html.index(user))
+    // }
+
+    def index = Action {
+        Ok(views.html.index())
     }
+
 }
