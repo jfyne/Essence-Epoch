@@ -5,8 +5,9 @@
  */
 package models
 
+import play.api._
 import play.api.db._
-import play.api.Play.current
+import play.api.Play.{configuration,current}
 import play.api.libs.ws._
 import play.api.libs.concurrent._
 import play.api.data._
@@ -75,6 +76,40 @@ object User {
      */
     def fetchAll:Seq[User] = DB.withConnection { implicit connection =>
         SQL("select * from epoch_users").as(simple *)
+    }
+
+    /**
+     * Refresh the access token
+     *
+     * @param User user
+     * @return String token
+     */
+    def refreshToken(user:User) = {
+        val response = WS.url("https://accounts.google.com/o/oauth2/token").post(Map(
+            "client_id" -> Seq(Play.configuration.getString("google.clientId").get),
+            "client_secret" -> Seq(Play.configuration.getString("google.clientSecret").get),
+            "refresh_token" -> Seq(user.refresh.get),
+            "grant_type" -> Seq("refresh_token")
+        ))
+        val json = response.value.get.json
+
+        (json \ "access_token").asOpt[String].map { token =>
+            DB.withConnection { implicit connection =>
+                SQL("""
+                    update epoch_users
+                    set
+                    user_token={token}
+                    where
+                    user_email={email}
+                    """
+                ).on(
+                    'token -> token,
+                    'email -> user.email.get
+                ).executeUpdate
+            }
+        }.getOrElse {
+            throw new Exception("Token refresh failed")
+        }
     }
 
     /**
