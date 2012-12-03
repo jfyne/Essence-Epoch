@@ -31,6 +31,8 @@ Ess.TimelineView = Backbone.View.extend({
         // Update timeline content size
         self.updateTimelineSize();
 
+        //self.addItem('Google', 'Google Chrome');
+
     },
 
     resized: function() {
@@ -77,6 +79,16 @@ Ess.TimelineView = Backbone.View.extend({
 
     },
 
+    addItem: function(client, project) {
 
+        var self = this;
+
+        var booking = new Ess.BookingView({
+            client: client,
+            project: project,
+            el: $('.bookings')
+        });
+
+    },
 
 });

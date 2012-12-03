@@ -17,17 +17,17 @@
                 <div id="timeline">
                     <div id="timeline-markers">
                         <ul>
-                            <li>3rd December</li>
-                            <li>4th December</li>
-                            <li>5th December</li>
-                            <li>6th December</li>
-                            <li>7th December</li>
-                            <li>8th December</li>
-                            <li>9th December</li>
-                            <li>10th December</li>
-                            <li>11th December</li>
-                            <li>12th December</li>
-                            <li>13th December</li>
+                            <li>3 <span>Dec</span></li>
+                            <li>4 <span>Dec</span></li>
+                            <li>5 <span>Dec</span></li>
+                            <li>6 <span>Dec</span></li>
+                            <li>7 <span>Dec</span></li>
+                            <li>8 <span>Dec</span></li>
+                            <li>9 <span>Dec</span></li>
+                            <li>10 <span>Dec</span></li>
+                            <li>11 <span>Dec</span></li>
+                            <li>12 <span>Dec</span></li>
+                            <li>13 <span>Dec</span></li>
                         </ul>
                     </div>
                     <div id="timeline-items">
@@ -47,44 +47,54 @@
                         <div class="item">
                             <h3>Paul Cooper</h3>
                             <ul class="bookings">
-                                <li style="height: 50px; top: 0;"><strong>Google</strong> Google Chrome</li>
-                                <li style="height: 50px; top: 50px;"><strong>Essence</strong> Olive Media View</li>
-                                <li style="height: 100px; top: 100px;"><strong>Google</strong> Google Chrome</li>
-                                <li style="height: 400px; top: 400px;"><strong>Essence</strong> Olive Media View</li>
+                                <li style="height: 50px; top: 0;"><strong>Client</strong> <span>Project Name</span></li>
+                                <li style="height: 50px; top: 50px;"><strong>Client</strong> <span>Project Name</span></li>
+                                <li style="height: 100px; top: 100px;"><strong>Client</strong> <span>Project Name</span></li>
+                                <li style="height: 400px; top: 400px;"><strong>Client</strong> <span>Project Name</span></li>
                             </ul>
                         </div>
                         <div class="item">
                             <h3>Josh Fyne</h3>
                             <ul class="bookings">
-                                <li style="height: 700px; top: 0;"><strong>Expedia</strong> Banner Creation</li>
+                                <li style="height: 700px; top: 0;"><strong>Client</strong> <span>Project Name</span></li>
                             </ul>
                         </div>
                         <div class="item">
                             <h3>Jency Chong</h3>
                             <ul class="bookings">
-                                <li style="height: 12.5px; top: 12.5px;"><strong>Barclays</strong> Brand Development</li>
-                                <li style="height: 200px; top: 100px;"><strong>Expedia</strong> Banner Creation</li>
+                                <li style="height: 50px; top: 12.5px;"><strong>Client</strong> <span>Project Name</span></li>
+                                <li style="height: 200px; top: 100px;"><strong>Client</strong> <span>Project Name</span></li>
                             </ul>
                         </div>
                         <div class="item">
-                            <h3>Josh Fyne</h3>
+                            <h3>Clare Isaacs</h3>
                             <ul class="bookings">
-                                <li style="height: 700px; top: 0;"><strong>Expedia</strong> Banner Creation</li>
+                                <li style="height: 50px; top: 0;"><strong>Client</strong> <span>Project Name</span></li>
+                                <li style="height: 50px; top: 75px;"><strong>Client</strong> <span>Project Name</span></li>
+                                <li style="height: 50px; top: 125px;"><strong>Client</strong> <span>Project Name</span></li>
+                                <li style="height: 50px; top: 150px;"><strong>Client</strong> <span>Project Name</span></li>
+                                <li style="height: 200px; top: 225px;"><strong>Client</strong> <span>Project Name</span></li>
                             </ul>
                         </div>
                         <div class="item">
-                            <h3>Josh Fyne</h3>
+                            <h3>Neal Davies</h3>
                             <ul class="bookings">
-                                <li style="height: 700px; top: 0;"><strong>Expedia</strong> Banner Creation</li>
+                                <li style="height: 700px; top: 0;"><strong>Client</strong> <span>Project Name</span></li>
                             </ul>
                         </div>
                         <div class="item">
-                            <h3>Josh Fyne</h3>
+                            <h3>Alastair Stone</h3>
                             <ul class="bookings">
-                                <li style="height: 700px; top: 0;"><strong>Expedia</strong> Banner Creation</li>
+                                <li style="height: 300px; top: 50px;"><strong>Client</strong> <span>Project Name</span></li>
                             </ul>
                         </div>
                     </div>
                 </div>
+                <script type="text/template" id="booking-template">
+                    <li>
+                        <strong><%= client_name %></strong>
+                        <span><%= project_name %></span>
+                    </li>
+                </script>
             </div>
 }

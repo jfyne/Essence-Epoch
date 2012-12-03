@@ -209,12 +209,13 @@ h1 {
 #timeline-markers {
     position: fixed;
     left: 0;
-    top: 80px;
-    width: 100px;
+    top: 70px;
+    width: 50px;
     height: 100%;
     background: @body-bg;
     border-right: 1px solid @content-border;
     z-index: 2;
+    opacity: 0.9;
 }
 
 #timeline-items {
@@ -222,41 +223,50 @@ h1 {
     left: 0;
     top: 40px;
     width: 100%;
-    padding-left: 100px;
-    height: 40px;
+    padding-left: 50px;
+    height: 30px;
     background: @content-bg;
     border-bottom: 1px solid @content-border;
     overflow: hidden;
     z-index: 2;
+    opacity: 0.9;
 }
 
 #timeline-inner {
-    margin-left: 100px;
-    margin-top: 40px;
-    width: 1900px;
-    height: 1220px;
+    margin-left: 50px;
+    margin-top: 30px;
     background: url(http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/noisy_grid_@2X.png);
     background-size: 150px;
     z-index: 1;
     position: relative;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 }
 
 #timeline-markers li {
     height: 100px;
     border-bottom: 1px solid @content-border;
-    padding: 10px;
-    font-size: 12px;
+    padding: 5px;
+    font-family: @font-bold;
+    font-size: 16px;
     line-height: 16px;
-    text-align: right;
+    text-align: center;
+}
+
+#timeline-markers li span {
+    display: block;
+    font-family: @font-regular;
+    font-size: 12px;
+    text-transform: uppercase;
 }
 
 #timeline-items li {
     float: left;
     width: 100px;
-    height: 40px;
-    padding: 10px;
-    font-size: 12px;
-    line-height: 18px;
+    height: 30px;
+    padding: 5px;
+    font-size: 11px;
+    line-height: 20px;
     .text-truncate();
     border-right: 1px solid @content-border;
 }
@@ -282,7 +292,7 @@ h1 {
     .text-truncate();
     font-size: 11px;
     line-height: 16px;
-    padding: 10px;
+    padding: 5px;
     .background-gradient(@booking-bg-from, @booking-bg-to);
     position: absolute;
     left: 0;
@@ -372,6 +382,59 @@ h1 {
 
     #masthead p {
         display: block;
+    }
+
+    /* 6. Timeline */
+
+    #timeline-markers {
+        top: 80px;
+        width: 100px;
+    }
+
+    #timeline-items {
+        top: 40px;
+        padding-left: 100px;
+        height: 40px;
+    }
+
+    #timeline-inner {
+        margin-left: 100px;
+        margin-top: 40px;
+    }
+
+    #timeline-markers li {
+        height: 100px;
+        padding: 10px;
+        font-size: 24px;
+        line-height: 24px;
+    }
+
+    #timeline-markers li span {
+        font-size: 12px;
+        line-height: 12px;
+        margin-top: 3px;
+    }
+
+    #timeline-items li {
+        width: 100px;
+        height: 40px;
+        padding: 10px;
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    #timeline-inner .item {
+        width: 100px;
+    }
+
+    #timeline-inner .item .bookings li {
+        font-size: 11px;
+        line-height: 16px;
+        padding: 10px;
+    }
+
+    #timeline-inner .item .bookings li strong {
+        font-size: 12px;
     }
 
 }
