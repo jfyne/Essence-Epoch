@@ -20,20 +20,13 @@ import java.security.MessageDigest
 
 sealed class EpochUser
 case class User(
-    id:Pk[Int],
-    googleId:Option[String],
-    qlikId:Option[Long],
-    email:Option[String],
-    password:Option[String],
-    userName:Option[String],
-    givenName:Option[String],
-    familyName:Option[String],
-    link:Option[String],
+    id:Pk[Long],
+    email:String,
+    name:Option[String],
+    given:Option[String],
+    family:Option[String],
     picture:Option[String],
-    gender:Option[String],
-    locale:Option[String],
-    state:Option[String],
-    cacheRefresh:Int,
+    token:Option[String],
     role:String
 ) extends EpochUser
 
@@ -42,37 +35,16 @@ object User {
     // -- Parsers
 
     val simple = {
-        get[Pk[Int]]("epoch_users.user_id") ~
-        get[Option[String]]("epoch_users.user_google_id") ~
-        get[Option[Long]]("epoch_users.user_qlik_id") ~
-        get[Option[String]]("epoch_users.user_email") ~
-        get[Option[String]]("epoch_users.user_password") ~
+        get[Pk[Long]]("epoch_users.user_id") ~
+        get[String]("epoch_users.user_email") ~
         get[Option[String]]("epoch_users.user_name") ~
-        get[Option[String]]("epoch_users.user_given_name") ~
-        get[Option[String]]("epoch_users.user_family_name") ~
-        get[Option[String]]("epoch_users.user_link") ~
+        get[Option[String]]("epoch_users.user_given") ~
+        get[Option[String]]("epoch_users.user_family") ~
         get[Option[String]]("epoch_users.user_picture") ~
-        get[Option[String]]("epoch_users.user_gender") ~
-        get[Option[String]]("epoch_users.user_locale") ~
-        get[Option[String]]("epoch_users.user_state") ~
-        get[Int]("epoch_users.user_cache_refresh") ~
+        get[Option[String]]("epoch_users.user_token") ~
         get[String]("epoch_users.user_role") map {
-            case id~googleId~qlikId~email~password~userName~givenName~familyName~link~picture~gender~locale~state~cacheRefresh~role => User(
-                id,
-                googleId,
-                qlikId,
-                email,
-                password,
-                userName,
-                givenName,
-                familyName,
-                link,
-                picture,
-                gender,
-                locale,
-                state,
-                cacheRefresh,
-                role
+            case id~email~name~given~family~picture~token~role => User(
+                id, email, name, given, family, picture, token, role
             )
         }
     }

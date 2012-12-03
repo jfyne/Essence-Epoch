@@ -28,7 +28,7 @@ object Application extends Controller {
         loginUrl += "?response_type=code"
         loginUrl += "&client_id=" + config.getString("google.clientId").get
         loginUrl += "&redirect_uri=" + redirectUrl
-        loginUrl += "&scope=" + java.net.URLEncoder.encode("https://www.googleapis.com/auth/userinfo.profile")
+        loginUrl += "&scope=" + java.net.URLEncoder.encode("https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar")
         loginUrl += "&state="
         loginUrl += "&access_type=offline"
         loginUrl += "&approval_prompt=auto"
@@ -68,7 +68,7 @@ object Application extends Controller {
                 (response.json \ "access_token").asOpt[String].map { token =>
                     val user = User.createUserFromGoogle(token)
                     Redirect(routes.Timeline.index).withSession(
-                        "email" -> user.email.get
+                        "email" -> user.email
                     )
                 }.getOrElse {
                     Redirect(routes.Application.login).withNewSession.flashing(
